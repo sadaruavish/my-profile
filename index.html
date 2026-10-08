@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sadaru Avishak</title>
+
+    <link rel="icon" type="image/png" href="profile.png">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="profile-container">
+
+        <!-- PROFILE -->
+        <div class="profile-section">
+
+            <img
+                src="profile.png"
+                alt="Sadaru Avishak"
+                class="profile-image"
+            >
+
+            <h1>Sadaru Avishak</h1>
+
+            <p class="username">@sadaruavishak</p>
+
+            <p class="bio">
+                Welcome to my profile 👋
+            </p>
+
+        </div>
+
+
+        <!-- SOCIAL LINKS -->
+        <div class="social-links">
+
+            <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                class="social-btn instagram"
+            >
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+
+
+            <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                class="social-btn facebook"
+            >
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
+            </a>
+
+
+            <a
+                href="https://www.tiktok.com/"
+                target="_blank"
+                class="social-btn tiktok"
+            >
+                <i class="fa-brands fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+
+
+            <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                class="social-btn youtube"
+            >
+                <i class="fa-brands fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+
+
+            <!-- CONTACT BUTTON -->
+            <button
+                type="button"
+                class="message-btn"
+                id="messageButton"
+            >
+                <i class="fa-regular fa-comment-dots"></i>
+                <span>Send Me a Message</span>
+            </button>
+
+
+            <!-- CONTACT BOX -->
+            <div
+                class="contact-box"
+                id="contactBox"
+            >
+
+                <form id="contactForm">
+
+                    <div class="input-group">
+
+                        <label for="name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            placeholder="Write your message..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="send-btn"
+                        id="sendButton"
+                    >
+                        <i class="fa-regular fa-paper-plane"></i>
+                        Send Message
+                    </button>
+
+                    <p
+                        id="formStatus"
+                        class="form-status"
+                    ></p>
+
+                </form>
+
+
+                <!-- TELEGRAM -->
+                <a
+                    href="#"
+                    id="telegramConnect"
+                    class="telegram-connect"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Connect Telegram</span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <footer>
+            <p>© 2026 Sadaru Avishak</p>
+        </footer>
+
+    </main>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const messageButton =
+        document.getElementById("messageButton");
+
+    const contactBox =
+        document.getElementById("contactBox");
+
+    const contactForm =
+        document.getElementById("contactForm");
+
+    const sendButton =
+        document.getElementById("sendButton");
+
+    const formStatus =
+        document.getElementById("formStatus");
+
+    const telegramConnect =
+        document.getElementById("telegramConnect");
+
+
+    /* =========================
+       CLOUDFLARE WORKER
+    ========================= */
+
+    const WORKER_URL =
+        "https://empty-king-7ca9sadaprofile-contact.sadaruavishak.workers.dev";
+
+
+    /* =========================
+       VISITOR KEY
+    ========================= */
+
+    let visitorKey =
+        localStorage.getItem("visitorKey");
+
+    if (!visitorKey) {
+
+        visitorKey =
+            "visitor_" +
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2, 12);
+
+        localStorage.setItem(
+            "visitorKey",
+            visitorKey
+        );
+    }
+
+
+    /* =========================
+       OPEN MESSAGE BOX
+    ========================= */
+
+    if (messageButton && contactBox) {
+
+        messageButton.addEventListener(
+            "click",
+            function () {
+
+                contactBox.classList.toggle(
+                    "show"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       TELEGRAM CONNECT LINK
+    ========================= */
+
+    if (telegramConnect) {
+
+        telegramConnect.href =
+            "https://t.me/SadaruProfileMessagesBot?start=" +
+            encodeURIComponent(visitorKey);
+
+    }
+
+
+    /* =========================
+       CHECK TELEGRAM
+    ========================= */
+
+    async function checkTelegramConnection() {
+
+        try {
+
+            const response =
+                await fetch(
+                    WORKER_URL +
+                    "/check-telegram?visitorKey=" +
+                    encodeURIComponent(visitorKey)
+                );
+
+            const data =
+                await response.json();
+
+
+            if (data.connected) {
+
+                telegramConnect.innerHTML =
+                    '<i class="fa-solid fa-circle-check"></i>' +
+                    '<span>Telegram Connected</span>';
+
+                telegramConnect.classList.add(
+                    "telegram-connected"
+                );
+
+                telegramConnect.removeAttribute(
+                    "href"
+                );
+
+                telegramConnect.removeAttribute(
+                    "target"
+                );
+
+                telegramConnect.style.cursor =
+                    "default";
+
+            }
+
+        } catch (error) {
+
+            console.log(
+                "Telegram status check failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    checkTelegramConnection();
+
+
+    setInterval(
+        checkTelegramConnection,
+        3000
+    );
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================= */
+
+    if (contactForm) {
+
+        contactForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const name =
+                    document
+                        .getElementById("name")
+                        .value
+                        .trim();
+
+
+                const message =
+                    document
+                        .getElementById("message")
+                        .value
+                        .trim();
+
+
+                if (!message) {
+
+                    formStatus.textContent =
+                        "Please enter a message.";
+
+                    return;
+
+                }
+
+
+                sendButton.disabled = true;
+
+                sendButton.innerHTML =
+                    '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+                formStatus.textContent = "";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            WORKER_URL,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    name:
+                                        name ||
+                                        "Anonymous",
+
+                                    message:
+                                        message,
+
+                                    visitorKey:
+                                        visitorKey
+
+                                })
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Failed to send message"
+                        );
+
+                    }
+
+
+                    formStatus.textContent =
+                        "✅ Message sent successfully!";
+
+                    formStatus.classList.add(
+                        "success"
+                    );
+
+
+                    contactForm.reset();
+
+
+                } catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                    formStatus.textContent =
+                        "❌ Something went wrong. Please try again.";
+
+                    formStatus.classList.remove(
+                        "success"
+                    );
+
+                }
+
+
+                sendButton.disabled =
+                    false;
+
+                sendButton.innerHTML =
+                    '<i class="fa-regular fa-paper-plane"></i> Send Message';
+
+            }
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
