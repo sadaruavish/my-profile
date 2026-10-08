@@ -1,0 +1,568 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 40px 15px;
+
+    background:
+        radial-gradient(circle at top, #3b82f6, transparent 35%),
+        linear-gradient(135deg, #020617, #111827, #1e1b4b);
+
+    color: white;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile {
+    width: 100%;
+    max-width: 430px;
+    text-align: center;
+}
+
+
+/* Profile Photo */
+
+.profile > img {
+    width: 125px;
+    height: 125px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 4px solid rgba(255, 255, 255, 0.9);
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.25);
+
+    transition: 0.3s;
+}
+
+.profile > img:hover {
+    transform: scale(1.05);
+}
+
+
+/* Name */
+
+.profile h1 {
+    font-size: 29px;
+    margin-bottom: 8px;
+}
+
+
+/* Welcome text */
+
+.profile > p {
+    font-size: 15px;
+    opacity: 0.75;
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   SOCIAL BUTTONS
+========================= */
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+
+.links a {
+    display: block;
+
+    text-decoration: none;
+
+    color: #111827;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    padding: 16px;
+
+    border-radius: 15px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
+
+    transition: all 0.3s ease;
+}
+
+
+/* Hover */
+
+.links a:hover {
+    transform: translateY(-3px) scale(1.01);
+
+    background: white;
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Click */
+
+.links a:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   MESSAGE BOX
+========================= */
+
+.contact-box {
+
+    display: none;
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 22px;
+
+    border-radius: 22px;
+
+    background: rgba(255, 255, 255, 0.10);
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Open animation */
+
+.contact-box.show {
+
+    display: block;
+
+    animation:
+        messageOpen 0.4s ease forwards;
+}
+
+
+@keyframes messageOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================
+   MESSAGE HEADER
+========================= */
+
+.contact-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+
+.contact-header h2 {
+
+    font-size: 21px;
+
+    color: white;
+
+    margin: 0;
+}
+
+
+/* Close button */
+
+#closeMessage {
+
+    width: 35px;
+    height: 35px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+#closeMessage:hover {
+
+    background: rgba(255, 255, 255, 0.30);
+
+    transform: rotate(90deg);
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.contact-box input,
+.contact-box textarea {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    padding: 14px 15px;
+
+    margin-bottom: 12px;
+
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    color: #111827;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+
+    transition: 0.3s;
+}
+
+
+.contact-box input:focus,
+.contact-box textarea:focus {
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 246, 0.35);
+
+    transform: translateY(-1px);
+}
+
+
+.contact-box textarea {
+
+    height: 120px;
+
+    resize: none;
+}
+
+
+/* =========================
+   SEND BUTTON
+========================= */
+
+#sendBtn {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: white;
+
+    color: #111827;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+#sendBtn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.20);
+}
+
+
+#sendBtn:active {
+
+    transform: scale(0.97);
+}
+
+
+#sendBtn:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================
+   RESULT MESSAGE
+========================= */
+
+#result {
+
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    color: white;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 30px 14px;
+    }
+
+    .profile > img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .profile h1 {
+        font-size: 25px;
+    }
+
+    .links a {
+        padding: 15px;
+    }
+
+    .contact-box {
+        padding: 18px;
+    }
+
+}
+/* =========================
+   SOCIAL ICONS
+========================= */
+
+.links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+
+.social-icon {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 19px;
+
+    border-radius: 8px;
+}
+
+
+/* Instagram */
+
+.instagram-icon {
+    font-size: 25px;
+}
+
+
+/* Facebook */
+
+.facebook-icon {
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+}
+
+
+/* TikTok */
+
+.tiktok-icon {
+    font-size: 23px;
+}
+
+
+/* YouTube */
+
+.youtube-icon {
+    font-size: 14px;
+}
+
+
+/* Message */
+
+.message-icon {
+    font-size: 20px;
+}
+.links a i {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+}
+
+.links a span {
+    font-size: 16px;
+}
+/* Original Social Media Icons */
+
+.links a i {
+    width: 28px;
+    text-align: center;
+    font-size: 21px;
+}
+
+/* Keep the existing button colors */
+
+.links a {
+    color: #111827;
+}
+
+/* Message icon */
+
+#messageButton i {
+    font-size: 20px;
+}
+/* ORIGINAL SOCIAL MEDIA COLORS */
+
+.links a .fa-instagram {
+    color: #E4405F;
+}
+
+.links a .fa-facebook {
+    color: #1877F2;
+}
+
+.links a .fa-tiktok {
+    color: #000000;
+}
+
+.links a .fa-youtube {
+    color: #FF0000;
+}
+
+.links a .fa-envelope {
+    color: #2563EB;
+}
+
+#sendBtn .fa-paper-plane {
+    color: #2563EB;
+}
+
+#sendBtn .fa-check {
+    color: #16A34A;
+}
+```css
+/* =================================
+   TELEGRAM CONNECT BUTTON
+================================= */
+
+.telegram-connect {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 12px;
+    padding: 12px 16px;
+
+    text-decoration: none;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    background: #ffffff;
+    color: #229ED9;
+
+    border: 1px solid rgba(34, 158, 217, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* Telegram Icon */
+
+.telegram-connect i {
+    font-size: 20px;
+    color: #229ED9;
+}
+
+
+/* Hover */
+
+.telegram-connect:hover {
+    transform: translateY(-2px);
+
+    background: #f5fbff;
+
+    box-shadow:
+        0 6px 18px rgba(34, 158, 217, 0.18);
+}
+
+
+/* Click */
+
+.telegram-connect:active {
+    transform: scale(0.98);
+}
+```
